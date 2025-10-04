@@ -1,5 +1,44 @@
 
+import { useState } from "react";
+
 function App() {
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [activeTab, setActiveTab] = useState('login');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [loginError, setLoginError] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    if (username.trim() === "admin" && password === "admin123") {
+      setIsLoggedIn(true);
+      setShowLoginModal(false);
+      setLoginError("");
+      resetForm();
+    } else {
+      setLoginError("Invalid username or password.");
+    }
+  };
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+    // Add your signup logic here
+    console.log("Signup:", { fullName, email, password });
+    setShowLoginModal(false);
+    resetForm();
+  };
+
+  const resetForm = () => {
+    setUsername("");
+    setPassword("");
+    setEmail("");
+    setFullName("");
+    setLoginError("");
+    setActiveTab('login');
+  };
 
   return (
     <>
@@ -39,7 +78,7 @@ function App() {
                   </li>
                   <li>
                     <div className="gradient-button">
-                      <a id="modal_trigger" href="#modal">
+                      <a onClick={() => setShowLoginModal(true)} style={{ cursor: 'pointer' }}>
                         <i className="fa fa-sign-in-alt" /> Sign In Now
                       </a>
                     </div>
@@ -55,110 +94,91 @@ function App() {
         </div>
       </header>
       {/* ***** Header Area End ***** */}
-      <div id="modal" className="popupContainer" style={{ display: "none" }}>
-        <div className="popupHeader">
-          <span className="header_title">Login</span>
-          <span className="modal_close">
-            <i className="fa fa-times" />
-          </span>
+      {showLoginModal && (
+        <div className="modal-overlay" onClick={() => setShowLoginModal(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setShowLoginModal(false)}>&times;</button>
+            
+            <div className="tabs">
+              <button 
+                className={`tab ${activeTab === 'login' ? 'active' : ''}`}
+                onClick={() => setActiveTab('login')}
+              >
+                Login
+              </button>
+              <button 
+                className={`tab ${activeTab === 'signup' ? 'active' : ''}`}
+                onClick={() => setActiveTab('signup')}
+              >
+                Sign Up
+              </button>
+            </div>
+
+            {activeTab === 'login' ? (
+              <div className="form-container">
+                <h2>Login</h2>
+                <form onSubmit={handleLogin}>
+                  <div className="form-group">
+                    <input 
+                      type="text" 
+                      value={username} 
+                      onChange={e => setUsername(e.target.value)} 
+                      placeholder="Username" 
+                      required 
+                    />
+                  </div>
+                  <div className="form-group">
+                    <input 
+                      type="password" 
+                      value={password} 
+                      onChange={e => setPassword(e.target.value)} 
+                      placeholder="Password" 
+                      required 
+                    />
+                  </div>
+                  {loginError && <div className="error">{loginError}</div>}
+                  <button type="submit" className="submit-btn">Login</button>
+                </form>
+              </div>
+            ) : (
+              <div className="form-container">
+                <h2>Sign Up</h2>
+                <form onSubmit={handleSignup}>
+                  <div className="form-group">
+                    <input 
+                      type="text" 
+                      value={fullName} 
+                      onChange={e => setFullName(e.target.value)} 
+                      placeholder="Full Name" 
+                      required 
+                    />
+                  </div>
+                  <div className="form-group">
+                    <input 
+                      type="email" 
+                      value={email} 
+                      onChange={e => setEmail(e.target.value)} 
+                      placeholder="Email" 
+                      required 
+                    />
+                  </div>
+                  <div className="form-group">
+                    <input 
+                      type="password" 
+                      value={password} 
+                      onChange={e => setPassword(e.target.value)} 
+                      placeholder="Password" 
+                      required 
+                    />
+                  </div>
+                  <button type="submit" className="submit-btn">Sign Up</button>
+                </form>
+              </div>
+            )}
+          </div>
         </div>
-        <section className="popupBody">
-          {/* Social Login */}
-          <div className="social_login">
-            <div className="">
-              <a href="#" className="social_box fb">
-                <span className="icon">
-                  <i className="fab fa-facebook" />
-                </span>
-                <span className="icon_title">Connect with Facebook</span>
-              </a>
-              <a href="#" className="social_box google">
-                <span className="icon">
-                  <i className="fab fa-google-plus" />
-                </span>
-                <span className="icon_title">Connect with Google</span>
-              </a>
-            </div>
-            <div className="centeredText">
-              <span>Or use your Email address</span>
-            </div>
-            <div className="action_btns">
-              <div className="one_half">
-                <a href="#" id="login_form" className="btn">
-                  Login
-                </a>
-              </div>
-              <div className="one_half last">
-                <a href="#" id="register_form" className="btn">
-                  Sign up
-                </a>
-              </div>
-            </div>
-          </div>
-          {/* Username & Password Login form */}
-          <div className="user_login">
-            <form>
-              <label>Email / Username</label>
-              <input type="text" />
-              <br />
-              <label>Password</label>
-              <input type="password" />
-              <br />
-              <div className="checkbox">
-                <input id="remember" type="checkbox" />
-                <label htmlFor="remember">Remember me on this computer</label>
-              </div>
-              <div className="action_btns">
-                <div className="one_half">
-                  <a href="#" className="btn back_btn">
-                    <i className="fa fa-angle-double-left" /> Back
-                  </a>
-                </div>
-                <div className="one_half last">
-                  <a href="#" className="btn btn_red">
-                    Login
-                  </a>
-                </div>
-              </div>
-            </form>
-            <a href="#" className="forgot_password">
-              Forgot password?
-            </a>
-          </div>
-          {/* Register Form */}
-          <div className="user_register">
-            <form>
-              <label>Full Name</label>
-              <input type="text" />
-              <br />
-              <label>Email Address</label>
-              <input type="email" />
-              <br />
-              <label>Password</label>
-              <input type="password" />
-              <br />
-              <div className="checkbox">
-                <input id="send_updates" type="checkbox" />
-                <label htmlFor="send_updates">
-                  Send me occasional email updates
-                </label>
-              </div>
-              <div className="action_btns">
-                <div className="one_half">
-                  <a href="#" className="btn back_btn">
-                    <i className="fa fa-angle-double-left" /> Back
-                  </a>
-                </div>
-                <div className="one_half last">
-                  <a href="#" className="btn btn_red">
-                    Register
-                  </a>
-                </div>
-              </div>
-            </form>
-          </div>
-        </section>
-      </div>
+      )}
+      
       <div
         className="main-banner wow fadeIn"
         id="top"
@@ -897,10 +917,8 @@ function App() {
         </div>
       </footer>
       {/* Scripts */}
+    </>
 
-
-      
-  </>
 
   )
 }
