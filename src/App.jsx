@@ -2,30 +2,19 @@
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 // import 'owl.carousel/dist/owl.carousel.min.js';
 
-import './assets/js/animation.js';
-import './assets/js/imagesloaded.js';
-import './assets/js/popup.js';
-import './assets/js/custom.js';
+// import '/js/animation.js';
+// import 'js/imagesloaded.js';
+// import 'js/popup.js';
+// import 'js/custom.js';
 
-import './assets/css/templatemo-chain-app-dev.css';
-import './assets/css/owl.css';
+// import 'css/templatemo-chain-app-dev.css';
+// import 'css/owl.css';
 
 function App() {
 
   return (
     <>
-      {/* ***** Preloader Start ***** */}
-      <div id="js-preloader" className="js-preloader">
-        <div className="preloader-inner">
-          <span className="dot" />
-          <div className="dots">
-            <span />
-            <span />
-            <span />
-          </div>
-        </div>
-      </div>
-      {/* ***** Preloader End ***** */}
+      
       {/* ***** Header Area Start ***** */}
       <header
         className="header-area header-sticky wow slideInDown"
