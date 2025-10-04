@@ -14,7 +14,6 @@ function App() {
 
   return (
     <>
-      
       {/* ***** Header Area Start ***** */}
       <header
         className="header-area header-sticky wow slideInDown"
