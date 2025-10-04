@@ -1,14 +1,3 @@
-// import 'jquery';
-// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-// import 'owl.carousel/dist/owl.carousel.min.js';
-
-// import '/js/animation.js';
-// import 'js/imagesloaded.js';
-// import 'js/popup.js';
-// import 'js/custom.js';
-
-// import 'css/templatemo-chain-app-dev.css';
-// import 'css/owl.css';
 
 function App() {
 
